@@ -29,7 +29,7 @@ public class BaseTest {
 
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;
-	public WindowsDriver winDriver;
+	String packageName = "com.androidsample.generalstore";
 
 	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
 			throws MalformedURLException, URISyntaxException {
@@ -71,6 +71,7 @@ public class BaseTest {
 			driver = new AndroidDriver(new URI("http://127.0.0.1:4723").toURL(), options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
+			driver.activateApp(packageName);
 		} else if (platformName.equalsIgnoreCase("iOS")) {
 			// ---iOS code here
 		}
@@ -92,6 +93,7 @@ public class BaseTest {
 
 	@AfterMethod
 	public void tearDown() {
+		driver.terminateApp(packageName);
 		driver.quit();
 		service.stop();
 	}
