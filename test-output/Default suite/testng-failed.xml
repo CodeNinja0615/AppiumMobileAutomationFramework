@@ -6,8 +6,8 @@
       <class name="sameerakhtar.tests.ECommerceTest">
         <methods>
           <include name="tearDown"/>
-          <include name="fillForm"/>
           <include name="setup"/>
+          <include name="endToEndTest"/>
         </methods>
       </class> <!-- sameerakhtar.tests.ECommerceTest -->
     </classes>
