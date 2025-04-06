@@ -4,11 +4,15 @@ import java.time.Duration;
 import java.util.Arrays;
 import java.util.List;
 
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
+
+import com.google.common.collect.ImmutableMap;
 
 import io.appium.java_client.AppiumBy;
 import sameerakhtar.TestComponents.BaseTest;
@@ -57,14 +61,19 @@ public class ECommerceTest extends BaseTest {
 			String amountStr = cartProduct
 					.findElement(AppiumBy.xpath("//android.widget.LinearLayout[2]/android.widget.TextView")).getText()
 					.replace("$", "");
-			double intAmount = Double.parseDouble(amountStr);
+			double intAmount = getFormattedAmount(amountStr);
 			sum += intAmount;
 		}
 		String totalAmountStr = driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/totalAmountLbl"))
 				.getText().replace("$", "");
-		double totalAmount = Double.parseDouble(totalAmountStr);
+		
+		double totalAmount = getFormattedAmount(totalAmountStr);
 		Assert.assertEquals(sum, totalAmount);
 		driver.findElement(AppiumBy.xpath("//android.widget.CheckBox")).click();
+		WebElement tnC = driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/termsButton"));
+		longPressAction(tnC);
+		wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.id("com.androidsample.generalstore:id/alertTitle")));
+		driver.findElement(AppiumBy.id("android:id/button1")).click();
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/btnProceed")).click();
 	}
 

@@ -13,17 +13,21 @@ import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.collect.ImmutableMap;
 
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
-import io.appium.java_client.windows.WindowsDriver;
 
 public class BaseTest {
 
@@ -77,6 +81,13 @@ public class BaseTest {
 		}
 	}
 
+	public void longPressAction(WebElement element) {
+		((JavascriptExecutor) driver).executeScript("mobile: longClickGesture",
+				ImmutableMap.of("elementId", ((RemoteWebElement) element).getId()));
+	}
+	public double getFormattedAmount(String amountStr) {
+		return Double.parseDouble(amountStr);
+	}
 	@BeforeMethod
 	public void setup() throws URISyntaxException, IOException {
 		Properties prop = new Properties();
