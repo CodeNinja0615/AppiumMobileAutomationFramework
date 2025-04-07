@@ -47,15 +47,19 @@ public class BaseTest {
 //					.withIPAddress("127.0.0.1").usingPort(4723).build();
 
 			// ---node execution for MAC Machine here
-			// Define environment variables for Appium 
+			// Define environment variables for Appium
 			Map<String, String> env = new HashMap<>(System.getenv());
 			env.put("ANDROID_HOME", "/Users/sameerakhtar/Library/Android/sdk");
 			env.put("ANDROID_SDK_ROOT", "/Users/sameerakhtar/Library/Android/sdk");
 
-			service = new AppiumServiceBuilder().usingDriverExecutable(new File("/opt/homebrew/opt/node@22/bin/node")) // Explicit Node.js path
+			service = new AppiumServiceBuilder().usingDriverExecutable(new File("/opt/homebrew/opt/node@22/bin/node")) // Explicit
+																														// Node.js
+																														// path
 					.withAppiumJS(new File("/opt/homebrew/lib/node_modules/appium/build/lib/main.js")) // Appium path
 					.withEnvironment(env) // ✅ Pass environment variables explicitly
-					.withIPAddress("127.0.0.1").usingPort(4723).build();
+					.withIPAddress("127.0.0.1").usingPort(4723)
+					.withArgument(() -> "--allow-insecure", "chromedriver_autodownload") //--Adding to handle web context
+					.build();
 
 			service.start();
 			UiAutomator2Options options = new UiAutomator2Options();
@@ -72,6 +76,7 @@ public class BaseTest {
 			options.setAppWaitForLaunch(true);
 			options.setGpsEnabled(true);
 			options.autoGrantPermissions();
+//			options.setChromedriverExecutable(""); //---Can set driver path but I have added arguments while creating service above ^
 			driver = new AndroidDriver(new URI("http://127.0.0.1:4723").toURL(), options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
@@ -85,9 +90,11 @@ public class BaseTest {
 		((JavascriptExecutor) driver).executeScript("mobile: longClickGesture",
 				ImmutableMap.of("elementId", ((RemoteWebElement) element).getId()));
 	}
+
 	public double getFormattedAmount(String amountStr) {
 		return Double.parseDouble(amountStr);
 	}
+
 	@BeforeMethod
 	public void setup() throws URISyntaxException, IOException {
 		Properties prop = new Properties();

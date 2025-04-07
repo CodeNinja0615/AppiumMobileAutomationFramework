@@ -2,28 +2,31 @@ package sameerakhtar.tests;
 
 import java.time.Duration;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import com.google.common.collect.ImmutableMap;
-
 import io.appium.java_client.AppiumBy;
+import io.appium.java_client.android.nativekey.AndroidKey;
+import io.appium.java_client.android.nativekey.KeyEvent;
 import sameerakhtar.TestComponents.BaseTest;
 
 public class ECommerceTest extends BaseTest {
 
 	/**
+	 * @throws InterruptedException 
 	 * 
 	 */
 	@Test
-	public void endToEndTest() {
+	public void endToEndTest() throws InterruptedException {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
 		List<String> expectedProductList = Arrays.asList(expectedProduct);
@@ -66,15 +69,28 @@ public class ECommerceTest extends BaseTest {
 		}
 		String totalAmountStr = driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/totalAmountLbl"))
 				.getText().replace("$", "");
-		
+
 		double totalAmount = getFormattedAmount(totalAmountStr);
 		Assert.assertEquals(sum, totalAmount);
 		driver.findElement(AppiumBy.xpath("//android.widget.CheckBox")).click();
 		WebElement tnC = driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/termsButton"));
 		longPressAction(tnC);
-		wait.until(ExpectedConditions.visibilityOfElementLocated(AppiumBy.id("com.androidsample.generalstore:id/alertTitle")));
+		wait.until(ExpectedConditions
+				.visibilityOfElementLocated(AppiumBy.id("com.androidsample.generalstore:id/alertTitle")));
 		driver.findElement(AppiumBy.id("android:id/button1")).click();
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/btnProceed")).click();
+		Thread.sleep(6000);
+		Set<String> contexts = driver.getContextHandles();
+		for(String context: contexts) {
+			System.out.println(context);
+		}
+		Iterator<String> it = contexts.iterator();
+		String nativeContext = it.next();
+		String webContext = it.next();
+		driver.context(webContext); //WEBVIEW_com.androidsample.generalstore
+		driver.findElement(By.name("q")).sendKeys("Rahul Shetty Academy",Keys.ENTER); //---Do not use AppiumBy
+		driver.pressKey(new KeyEvent(AndroidKey.BACK));
+		driver.context(nativeContext);
 	}
 
 	@Test
@@ -87,6 +103,5 @@ public class ECommerceTest extends BaseTest {
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/btnLetsShop")).click();
 		String toastMsg = driver.findElement(AppiumBy.xpath("(//android.widget.Toast)[1]")).getDomAttribute("name");
 		Assert.assertEquals(toastMsg, "Please enter your name");
-
 	}
 }
