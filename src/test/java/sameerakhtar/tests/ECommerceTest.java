@@ -88,7 +88,7 @@ public class ECommerceTest extends BaseTest {
 		String nativeContext = it.next();
 		String webContext = it.next();
 		driver.context(webContext); //WEBVIEW_com.androidsample.generalstore
-		driver.findElement(By.name("q")).sendKeys("Rahul Shetty Academy",Keys.ENTER); //---Do not use AppiumBy
+		driver.findElement(By.name("q")).sendKeys("Rahul Shetty Academy",Keys.ENTER); //---Do not use AppiumBy for web context
 		driver.pressKey(new KeyEvent(AndroidKey.BACK));
 		driver.context(nativeContext);
 	}
