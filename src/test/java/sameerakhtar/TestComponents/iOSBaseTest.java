@@ -1,6 +1,6 @@
 package sameerakhtar.TestComponents;
 
-//----https://github.com/appium/appium-uiautomator2-driver/?tab=readme-ov-file
+//----https://appium.github.io/appium-xcuitest-driver/8.3/guides/gestures/
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,8 +14,12 @@ import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+
+import com.google.common.collect.ImmutableMap;
 
 import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
@@ -33,30 +37,32 @@ public class iOSBaseTest {
 
 		if (platformName.equalsIgnoreCase("Android")) {
 		} else if (platformName.equalsIgnoreCase("iOS")) {
-			service = new AppiumServiceBuilder().usingDriverExecutable(new File("/opt/homebrew/opt/node@22/bin/node")) // Explicit Node.js path
+			service = new AppiumServiceBuilder().usingDriverExecutable(new File("/opt/homebrew/opt/node@22/bin/node")) // Explicit
+																														// Node.js
+																														// path
 					.withAppiumJS(new File("/opt/homebrew/lib/node_modules/appium/build/lib/main.js")) // Appium path
 					.withIPAddress("127.0.0.1").usingPort(4723)
 //					.withArgument(() -> "--allow-insecure", "chromedriver_autodownload") // --Adding to handle web context
 					.build();
 
 			service.start();
-			
+
 			XCUITestOptions options = new XCUITestOptions();
-			//Appium -> WebDriver Agent -> iOS App
+			// Appium -> WebDriver Agent -> iOS App
 			options.setDeviceName(deviceName);
 			options.setPlatformName(platformName);
 //			options.setPlatformVersion("18.4");
 			options.setApp("/Users/sameerakhtar/Desktop/UIKitCatalog.app");
 			options.setNoReset(setNoReset); // ----- set true else app will be reset on start
 			options.setWdaLaunchTimeout(Duration.ofSeconds(10));
-			//options.setChromedriverExecutable(""); //---Can set driver path but I have added arguments while creating service above ^
+			// options.setChromedriverExecutable(""); //---Can set driver path but I have
+			// added arguments while creating service above ^
 			driver = new IOSDriver(new URI("http://127.0.0.1:4723").toURL(), options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
 //			driver.activateApp(packageName);
 		}
 	}
-
 
 	@BeforeMethod
 	public void setup() throws URISyntaxException, IOException {
@@ -70,6 +76,11 @@ public class iOSBaseTest {
 				: prop.getProperty("platformName");
 
 		configureAppiumMobile(deviceName, platformName, true);
+	}
+
+	public void longPressAction(WebElement element) {
+		driver.executeScript("mobile: touchAndHold",
+				ImmutableMap.of("elementId", ((RemoteWebElement) element).getId(), "duration", 10.0));
 	}
 
 	@AfterMethod

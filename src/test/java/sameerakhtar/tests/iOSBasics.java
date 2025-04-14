@@ -1,7 +1,7 @@
 package sameerakhtar.tests;
 
+import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
-
 import io.appium.java_client.AppiumBy;
 import sameerakhtar.TestComponents.iOSBaseTest;
 
@@ -19,9 +19,17 @@ public class iOSBasics extends iOSBaseTest {
 //		AppiumBy.iOSNsPredicateString("type = 'XCUIElementTypeStaticText' AND value BEGINSWITH[c] 'Confirm'");
 //		AppiumBy.iOSNsPredicateString("type = 'XCUIElementTypeStaticText' AND value ENDSWITH[c] 'Cancel'");
 		String alertMsg = driver
-				.findElement(AppiumBy.iOSNsPredicateString("type = 'XCUIElementTypeStaticText' AND name BEGINSWITH[c] 'A message'"))
+				.findElement(AppiumBy
+						.iOSNsPredicateString("type = 'XCUIElementTypeStaticText' AND name BEGINSWITH[c] 'A message'"))
 				.getText();
 		System.out.println(alertMsg);
 		driver.findElement(AppiumBy.xpath("//XCUIElementTypeButton[@name='Confirm']")).click();
+	}
+
+	@Test
+	public void longPressTest() {
+		driver.findElement(AppiumBy.accessibilityId("Steppers")).click();
+		WebElement e = driver.findElement(AppiumBy.xpath("(//XCUIElementTypeButton[@name=\"Increment\"])[3]"));
+		longPressAction(e);
 	}
 }

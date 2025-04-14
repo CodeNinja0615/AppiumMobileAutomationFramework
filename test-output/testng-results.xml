@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="1" total="2" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-04-11T03:14:12 IST" name="Default suite" finished-at="2025-04-11T03:14:21 IST" duration-ms="8684">
+  <suite started-at="2025-04-14T22:08:45 IST" name="Default suite" finished-at="2025-04-14T22:08:59 IST" duration-ms="13925">
     <groups>
     </groups>
-    <test started-at="2025-04-11T03:14:12 IST" name="Default test" finished-at="2025-04-11T03:14:21 IST" duration-ms="8684">
+    <test started-at="2025-04-14T22:08:45 IST" name="Default test" finished-at="2025-04-14T22:08:59 IST" duration-ms="13925">
       <class name="sameerakhtar.tests.iOSBasics">
-        <test-method is-config="true" signature="setup()[pri:0, instance:sameerakhtar.tests.iOSBasics@618b19ad]" started-at="2025-04-11T03:14:13 IST" name="setup" finished-at="2025-04-11T03:14:15 IST" duration-ms="2392" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:sameerakhtar.tests.iOSBasics@411f53a0]" started-at="2025-04-14T22:08:45 IST" name="setup" finished-at="2025-04-14T22:08:48 IST" duration-ms="2594" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="iOSBasicTest()[pri:0, instance:sameerakhtar.tests.iOSBasics@618b19ad]" started-at="2025-04-11T03:14:15 IST" name="iOSBasicTest" finished-at="2025-04-11T03:14:21 IST" duration-ms="6140" status="PASS">
+        <test-method signature="longPressTest()[pri:0, instance:sameerakhtar.tests.iOSBasics@411f53a0]" started-at="2025-04-14T22:08:48 IST" name="longPressTest" finished-at="2025-04-14T22:08:59 IST" duration-ms="11187" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- iOSBasicTest -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:sameerakhtar.tests.iOSBasics@618b19ad]" started-at="2025-04-11T03:14:21 IST" name="tearDown" finished-at="2025-04-11T03:14:21 IST" duration-ms="73" status="PASS">
+        </test-method> <!-- longPressTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:sameerakhtar.tests.iOSBasics@411f53a0]" started-at="2025-04-14T22:08:59 IST" name="tearDown" finished-at="2025-04-14T22:08:59 IST" duration-ms="79" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->
