@@ -31,7 +31,7 @@ public class iOSBaseTest {
 	public AppiumDriverLocalService service;
 	public IOSDriver driver;
 	String packageName = "com.androidsample.generalstore";
-
+	String appPath = System.getProperty("user.dir") + "/src/main/java/sameerakhtar/resources/UIKitCatalog.app";
 	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
 			throws MalformedURLException, URISyntaxException {
 
@@ -52,7 +52,7 @@ public class iOSBaseTest {
 			options.setDeviceName(deviceName);
 			options.setPlatformName(platformName);
 //			options.setPlatformVersion("18.4");
-			options.setApp("/Users/sameerakhtar/Desktop/UIKitCatalog.app");
+			options.setApp(appPath);
 			options.setNoReset(setNoReset); // ----- set true else app will be reset on start
 			options.setWdaLaunchTimeout(Duration.ofSeconds(10));
 			// options.setChromedriverExecutable(""); //---Can set driver path but I have
@@ -83,6 +83,12 @@ public class iOSBaseTest {
 				ImmutableMap.of("elementId", ((RemoteWebElement) element).getId(), "duration", 10.0));
 	}
 
+	public void scrollToElement(WebElement element) {
+		driver.executeScript("mobile: scroll", ImmutableMap.of(
+			    "direction", "down",
+			    "elementId", ((RemoteWebElement) element).getId()
+			));
+	}
 	@AfterMethod
 	public void tearDown() {
 		driver.terminateApp(packageName);
