@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="4" total="5" passed="1" failed="0" skipped="0">
+<testng-results ignored="5" total="6" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-04-15T01:55:53 IST" name="Default suite" finished-at="2025-04-15T01:55:57 IST" duration-ms="3598">
+  <suite started-at="2025-04-16T02:19:14 IST" name="Default suite" finished-at="2025-04-16T02:19:52 IST" duration-ms="38550">
     <groups>
     </groups>
-    <test started-at="2025-04-15T01:55:53 IST" name="Default test" finished-at="2025-04-15T01:55:57 IST" duration-ms="3598">
+    <test started-at="2025-04-16T02:19:14 IST" name="Default test" finished-at="2025-04-16T02:19:52 IST" duration-ms="38550">
       <class name="sameerakhtar.tests.iOSBasics">
-        <test-method is-config="true" signature="setup()[pri:0, instance:sameerakhtar.tests.iOSBasics@13c9d689]" started-at="2025-04-15T01:55:53 IST" name="setup" finished-at="2025-04-15T01:55:56 IST" duration-ms="2107" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:sameerakhtar.tests.iOSBasics@62379589]" started-at="2025-04-16T02:19:14 IST" name="setup" finished-at="2025-04-16T02:19:28 IST" duration-ms="14213" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="sliderTest()[pri:0, instance:sameerakhtar.tests.iOSBasics@13c9d689]" started-at="2025-04-15T01:55:56 IST" name="sliderTest" finished-at="2025-04-15T01:55:57 IST" duration-ms="1357" status="PASS">
+        <test-method signature="swipeTest()[pri:0, instance:sameerakhtar.tests.iOSBasics@62379589]" started-at="2025-04-16T02:19:28 IST" name="swipeTest" finished-at="2025-04-16T02:19:51 IST" duration-ms="23101" status="PASS">
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- sliderTest -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:sameerakhtar.tests.iOSBasics@13c9d689]" started-at="2025-04-15T01:55:57 IST" name="tearDown" finished-at="2025-04-15T01:55:57 IST" duration-ms="62" status="PASS">
+        </test-method> <!-- swipeTest -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:sameerakhtar.tests.iOSBasics@62379589]" started-at="2025-04-16T02:19:51 IST" name="tearDown" finished-at="2025-04-16T02:19:52 IST" duration-ms="1158" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

@@ -30,7 +30,7 @@ public class iOSBaseTest {
 
 	public AppiumDriverLocalService service;
 	public IOSDriver driver;
-	String packageName = "com.androidsample.generalstore";
+	String packageName = "com.example.apple-samplecode.UICatalog"; //xcrun simctl listapps booted //---For Simulator
 	String appPath = System.getProperty("user.dir") + "/src/main/java/sameerakhtar/resources/UIKitCatalog.app";
 	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
 			throws MalformedURLException, URISyntaxException {
@@ -52,15 +52,14 @@ public class iOSBaseTest {
 			options.setDeviceName(deviceName);
 			options.setPlatformName(platformName);
 //			options.setPlatformVersion("18.4");
-			options.setApp(appPath);
+//			options.setApp(appPath); //---To open app with .app file
 			options.setNoReset(setNoReset); // ----- set true else app will be reset on start
 			options.setWdaLaunchTimeout(Duration.ofSeconds(10));
-			// options.setChromedriverExecutable(""); //---Can set driver path but I have
-			// added arguments while creating service above ^
+			// options.setChromedriverExecutable(""); //---Can set driver path but I have added arguments while creating service above ^
 			driver = new IOSDriver(new URI("http://127.0.0.1:4723").toURL(), options);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
-//			driver.activateApp(packageName);
+			driver.activateApp(packageName);
 		}
 	}
 
@@ -89,6 +88,12 @@ public class iOSBaseTest {
 			    "elementId", ((RemoteWebElement) element).getId()
 			));
 	}
+	
+	public void swipeAction() {
+		driver.executeScript("mobile: swipe", ImmutableMap.of(
+			    "velocity", 2500, "direction", "left"));
+	}
+	
 	@AfterMethod
 	public void tearDown() {
 		driver.terminateApp(packageName);
@@ -96,8 +101,7 @@ public class iOSBaseTest {
 		service.stop();
 	}
 
-	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report
-		// in Listeners
+	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report in Listeners
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File src = ts.getScreenshotAs(OutputType.FILE);
 		File filePath = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");

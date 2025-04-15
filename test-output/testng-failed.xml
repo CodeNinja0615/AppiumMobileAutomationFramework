@@ -5,8 +5,8 @@
     <classes>
       <class name="sameerakhtar.tests.iOSBasics">
         <methods>
-          <include name="sliderTest"/>
           <include name="setup"/>
+          <include name="swipeTest"/>
           <include name="tearDown"/>
         </methods>
       </class> <!-- sameerakhtar.tests.iOSBasics -->

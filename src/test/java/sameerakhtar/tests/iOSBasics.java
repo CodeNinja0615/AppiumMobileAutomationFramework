@@ -1,5 +1,8 @@
 package sameerakhtar.tests;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
@@ -60,7 +63,25 @@ public class iOSBasics extends iOSBaseTest {
 	public void sliderTest() {
 		driver.findElement(AppiumBy.accessibilityId("Sliders")).click();
 		WebElement slider = driver.findElement(AppiumBy.xpath("(//XCUIElementTypeSlider)[3]"));
-		slider.sendKeys("0.92%"); //--- 0-1 range
+		slider.sendKeys("0.92%"); // --- 0-1 range
 		System.out.println(slider.getText());
+	}
+
+	@Test
+	public void swipeTest() throws IOException {
+		// ---Bundle ID
+		driver.activateApp("com.apple.mobileslideshow");
+//		driver.execute("mobile:launchApp", ImmutableMap.of("bundleId", ""));
+		driver.findElement(AppiumBy.xpath("//XCUIElementTypeButton[contains(@name, 'album-ObjectIdentifier')]"))
+				.click();
+		List<WebElement> images = driver.findElements(AppiumBy.iOSClassChain("**/XCUIElementTypeImage"));
+		System.out.println(images.size() - 2);
+		images.get(0).click();
+		for (int i = 0; i < images.size(); i++) {
+			swipeAction();
+		}
+		driver.findElement(AppiumBy.accessibilityId("chevron.backward")).click();
+		driver.findElement(AppiumBy.accessibilityId("chevron.backward")).click();
+		driver.terminateApp("com.apple.mobileslideshow");
 	}
 }
