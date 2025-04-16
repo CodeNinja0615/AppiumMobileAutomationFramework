@@ -32,7 +32,7 @@ public class ECommerceTest extends BaseTest {
 		List<String> expectedProductList = Arrays.asList(expectedProduct);
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/spinnerCountry")).click();
 		driver.findElement(
-				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Algeria\"));"))
+				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text('Algeria'));"))
 				.click();
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/nameField")).sendKeys("Sameer Akhtar");
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/radioMale")).click();
