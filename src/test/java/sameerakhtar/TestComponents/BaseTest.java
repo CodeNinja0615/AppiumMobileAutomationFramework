@@ -81,6 +81,7 @@ public class BaseTest {
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
 			driver.activateApp(packageName);
+			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		} else if (platformName.equalsIgnoreCase("iOS")) {
 			// ---iOS code here
 		}

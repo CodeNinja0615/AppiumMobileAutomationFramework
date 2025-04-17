@@ -18,21 +18,28 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import sameerakhtar.TestComponents.BaseTest;
+import sameerakhtar.pageObjects.android.FormPage;
 
 public class ECommerceTest extends BaseTest {
 
+	@Test
+	public void endToEndTestPOM() {
+		FormPage formPage = new FormPage(driver);
+		formPage.setCountry("India");
+		formPage.setNameField("Sameer Akhtar");
+		formPage.setGender("Male");
+	}
 	/**
 	 * @throws InterruptedException 
 	 * 
 	 */
 	@Test
 	public void endToEndTest() throws InterruptedException {
-		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
 		List<String> expectedProductList = Arrays.asList(expectedProduct);
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/spinnerCountry")).click();
 		driver.findElement(
-				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text('Algeria'));"))
+				AppiumBy.androidUIAutomator("new UiScrollable(new UiSelector()).scrollIntoView(text(\"Algeria\"));"))
 				.click();
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/nameField")).sendKeys("Sameer Akhtar");
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/radioMale")).click();

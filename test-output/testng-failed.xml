@@ -3,13 +3,13 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="sameerakhtar.tests.iOSBasics">
+      <class name="sameerakhtar.tests.ECommerceTest">
         <methods>
-          <include name="setup"/>
-          <include name="swipeTest"/>
           <include name="tearDown"/>
+          <include name="endToEndTestPOM"/>
+          <include name="setup"/>
         </methods>
-      </class> <!-- sameerakhtar.tests.iOSBasics -->
+      </class> <!-- sameerakhtar.tests.ECommerceTest -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->
