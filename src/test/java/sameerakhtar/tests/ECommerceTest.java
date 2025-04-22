@@ -19,15 +19,22 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import sameerakhtar.TestComponents.BaseTest;
 import sameerakhtar.pageObjects.android.FormPage;
+import sameerakhtar.pageObjects.android.ProductCatalogue;
 
 public class ECommerceTest extends BaseTest {
 
 	@Test
 	public void endToEndTestPOM() {
+		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
 		FormPage formPage = new FormPage(driver);
-		formPage.setCountry("India");
+		formPage.setCountry("Algeria");
 		formPage.setNameField("Sameer Akhtar");
 		formPage.setGender("Male");
+		formPage.submitForm();
+		ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+		productCatalogue.searchAndAddProductToCart(expectedProduct);
+		productCatalogue.navigateToCart();
+		
 	}
 	/**
 	 * @throws InterruptedException 
