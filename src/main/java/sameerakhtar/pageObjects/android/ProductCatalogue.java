@@ -23,9 +23,9 @@ public class ProductCatalogue extends AndroidActions {
 
 	@AndroidFindBy(xpath = "//android.support.v7.widget.RecyclerView[@resource-id='com.androidsample.generalstore:id/rvProductList']/android.widget.RelativeLayout")
 	List<WebElement> productList;
-	@AndroidFindBy(id="com.androidsample.generalstore:id/appbar_btn_cart")
+	@AndroidFindBy(id = "com.androidsample.generalstore:id/appbar_btn_cart")
 	WebElement cartBtn;
-	
+
 	By productTextView = By.xpath("//android.widget.TextView");
 	By addToCartBtn = By.id("com.androidsample.generalstore:id/productAddCart");
 
@@ -43,8 +43,9 @@ public class ProductCatalogue extends AndroidActions {
 			}
 		}
 	}
-	
-	public void navigateToCart() {
+
+	public CartPage navigateToCartPage() {
 		cartBtn.click();
+		return new CartPage(driver);
 	}
 }

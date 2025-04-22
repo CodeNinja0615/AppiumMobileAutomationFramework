@@ -50,7 +50,8 @@ public class FormPage extends AndroidActions {
 		}
 	}
 
-	public void submitForm() {
+	public ProductCatalogue submitForm() {
 		letShopBtn.click();
+		return new ProductCatalogue(driver);
 	}
 }

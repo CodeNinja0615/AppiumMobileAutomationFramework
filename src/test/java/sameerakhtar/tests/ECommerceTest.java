@@ -18,11 +18,15 @@ import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import sameerakhtar.TestComponents.BaseTest;
+import sameerakhtar.pageObjects.android.CartPage;
 import sameerakhtar.pageObjects.android.FormPage;
 import sameerakhtar.pageObjects.android.ProductCatalogue;
 
 public class ECommerceTest extends BaseTest {
 
+	/**
+	 * 
+	 */
 	@Test
 	public void endToEndTestPOM() {
 		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
@@ -30,10 +34,9 @@ public class ECommerceTest extends BaseTest {
 		formPage.setCountry("Algeria");
 		formPage.setNameField("Sameer Akhtar");
 		formPage.setGender("Male");
-		formPage.submitForm();
-		ProductCatalogue productCatalogue = new ProductCatalogue(driver);
+		ProductCatalogue productCatalogue = formPage.submitForm();
 		productCatalogue.searchAndAddProductToCart(expectedProduct);
-		productCatalogue.navigateToCart();
+		CartPage cartPage = productCatalogue.navigateToCartPage();
 		
 	}
 	/**
