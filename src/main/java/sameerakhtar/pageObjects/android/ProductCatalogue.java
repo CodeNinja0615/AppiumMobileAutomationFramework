@@ -22,18 +22,16 @@ public class ProductCatalogue extends AndroidActions {
 	}
 
 	@AndroidFindBy(xpath = "//android.support.v7.widget.RecyclerView[@resource-id='com.androidsample.generalstore:id/rvProductList']/android.widget.RelativeLayout")
-	List<WebElement> productList;
+	private List<WebElement> productList;
 	@AndroidFindBy(id = "com.androidsample.generalstore:id/appbar_btn_cart")
-	WebElement cartBtn;
+	private WebElement cartBtn;
 
-	By productTextView = By.xpath("//android.widget.TextView");
-	By addToCartBtn = By.id("com.androidsample.generalstore:id/productAddCart");
+	private By productTextView = AppiumBy.xpath("//android.widget.TextView");
+	private By addToCartBtn = AppiumBy.id("com.androidsample.generalstore:id/productAddCart");
 
-	public void searchAndAddProductToCart(String[] expectedProductList) {
+	public void searchAndAddProductToCart(List<String> expectedProductList) {
 		for (String product : expectedProductList) {
 			scrollToElementWithText(product);
-//			List<WebElement> productList = driver.findElements(AppiumBy.xpath(
-//					"//android.support.v7.widget.RecyclerView[@resource-id='com.androidsample.generalstore:id/rvProductList']/android.widget.RelativeLayout"));
 			for (WebElement productEle : productList) {
 				String productName = productEle.findElement(productTextView).getText();
 				if (product.equals(productName)) {

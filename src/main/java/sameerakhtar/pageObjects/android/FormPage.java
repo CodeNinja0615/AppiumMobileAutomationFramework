@@ -21,15 +21,12 @@ public class FormPage extends AndroidActions {
 //	@iOSXCUITFindBy
 	@AndroidFindBy(id = "com.androidsample.generalstore:id/spinnerCountry")
 	private WebElement country;
-
 	@AndroidFindBy(id = "com.androidsample.generalstore:id/nameField")
 	private WebElement nameField;
-
 	@AndroidFindBy(id = "com.androidsample.generalstore:id/radioMale")
 	private WebElement maleOption;
 	@AndroidFindBy(id = "com.androidsample.generalstore:id/radioFemale")
 	private WebElement femaleOption;
-
 	@AndroidFindBy(id = "com.androidsample.generalstore:id/btnLetsShop")
 	private WebElement letShopBtn;
 

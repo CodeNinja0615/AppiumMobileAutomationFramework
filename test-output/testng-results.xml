@@ -2,20 +2,20 @@
 <testng-results ignored="2" total="3" passed="1" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-04-23T01:51:23 IST" name="Default suite" finished-at="2025-04-23T01:51:52 IST" duration-ms="28749">
+  <suite started-at="2025-04-24T01:44:45 IST" name="Default suite" finished-at="2025-04-24T01:45:36 IST" duration-ms="50775">
     <groups>
     </groups>
-    <test started-at="2025-04-23T01:51:23 IST" name="Default test" finished-at="2025-04-23T01:51:52 IST" duration-ms="28749">
+    <test started-at="2025-04-24T01:44:45 IST" name="Default test" finished-at="2025-04-24T01:45:36 IST" duration-ms="50775">
       <class name="sameerakhtar.tests.ECommerceTest">
-        <test-method is-config="true" signature="setup()[pri:0, instance:sameerakhtar.tests.ECommerceTest@13c9d689]" started-at="2025-04-23T01:51:24 IST" name="setup" finished-at="2025-04-23T01:51:32 IST" duration-ms="8630" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:sameerakhtar.tests.ECommerceTest@13c9d689]" started-at="2025-04-24T01:44:45 IST" name="setup" finished-at="2025-04-24T01:44:54 IST" duration-ms="9101" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="endToEndTestPOM()[pri:0, instance:sameerakhtar.tests.ECommerceTest@13c9d689]" started-at="2025-04-23T01:51:32 IST" name="endToEndTestPOM" finished-at="2025-04-23T01:51:51 IST" duration-ms="19030" status="PASS">
+        <test-method signature="endToEndTestPOM()[pri:0, instance:sameerakhtar.tests.ECommerceTest@13c9d689]" started-at="2025-04-24T01:44:54 IST" name="endToEndTestPOM" finished-at="2025-04-24T01:45:35 IST" duration-ms="40624" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- endToEndTestPOM -->
-        <test-method is-config="true" signature="tearDown()[pri:0, instance:sameerakhtar.tests.ECommerceTest@13c9d689]" started-at="2025-04-23T01:51:51 IST" name="tearDown" finished-at="2025-04-23T01:51:52 IST" duration-ms="1021" status="PASS">
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:sameerakhtar.tests.ECommerceTest@13c9d689]" started-at="2025-04-24T01:45:35 IST" name="tearDown" finished-at="2025-04-24T01:45:36 IST" duration-ms="984" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

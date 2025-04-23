@@ -28,11 +28,13 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.options.UiAutomator2Options;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
+import sameerakhtar.pageObjects.android.FormPage;
 
 public class BaseTest {
 
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;
+	public FormPage formPage;
 	String packageName = "com.androidsample.generalstore";
 
 	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
@@ -82,6 +84,7 @@ public class BaseTest {
 			driver.unlockDevice();
 			driver.activateApp(packageName);
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+			formPage = new FormPage(driver);
 		} else if (platformName.equalsIgnoreCase("iOS")) {
 			// ---iOS code here
 		}

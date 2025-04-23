@@ -19,28 +19,37 @@ import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
 import sameerakhtar.TestComponents.BaseTest;
 import sameerakhtar.pageObjects.android.CartPage;
-import sameerakhtar.pageObjects.android.FormPage;
 import sameerakhtar.pageObjects.android.ProductCatalogue;
+import sameerakhtar.pageObjects.android.WebviewPage;
 
 public class ECommerceTest extends BaseTest {
 
 	/**
+	 * @throws InterruptedException
 	 * 
 	 */
 	@Test
-	public void endToEndTestPOM() {
+	public void endToEndTestPOM() throws InterruptedException {
 		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
-		FormPage formPage = new FormPage(driver);
+		List<String> expectedProductList = Arrays.asList(expectedProduct);
 		formPage.setCountry("Algeria");
 		formPage.setNameField("Sameer Akhtar");
 		formPage.setGender("Male");
 		ProductCatalogue productCatalogue = formPage.submitForm();
-		productCatalogue.searchAndAddProductToCart(expectedProduct);
+		productCatalogue.searchAndAddProductToCart(expectedProductList);
 		CartPage cartPage = productCatalogue.navigateToCartPage();
-		
+		boolean status = cartPage.verifyProductInCart(expectedProductList);
+		Assert.assertTrue(status);
+		double calculatedSum = cartPage.calculateTotalAmountFromProducts();
+		double totalAmount = cartPage.getTotalAmount();
+		Assert.assertEquals(calculatedSum, totalAmount);
+		WebviewPage webviewPage = cartPage.completePurchase();
+		Thread.sleep(6000);
+		webviewPage.switchContextAndPerformSearchAction();
 	}
+
 	/**
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 * 
 	 */
 	@Test
@@ -98,14 +107,15 @@ public class ECommerceTest extends BaseTest {
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/btnProceed")).click();
 		Thread.sleep(6000);
 		Set<String> contexts = driver.getContextHandles();
-		for(String context: contexts) {
+		for (String context : contexts) {
 			System.out.println(context);
 		}
 		Iterator<String> it = contexts.iterator();
 		String nativeContext = it.next();
 		String webContext = it.next();
-		driver.context(webContext); //WEBVIEW_com.androidsample.generalstore
-		driver.findElement(By.name("q")).sendKeys("Rahul Shetty Academy",Keys.ENTER); //---Do not use AppiumBy for web context
+		driver.context(webContext); // WEBVIEW_com.androidsample.generalstore
+		driver.findElement(By.name("q")).sendKeys("Rahul Shetty Academy", Keys.ENTER); // ---Do not use AppiumBy for web
+																						// context
 		driver.pressKey(new KeyEvent(AndroidKey.BACK));
 		driver.context(nativeContext);
 	}

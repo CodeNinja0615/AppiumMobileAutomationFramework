@@ -3,6 +3,7 @@ package sameerakhtar.utils;
 import java.time.Duration;
 import java.util.NoSuchElementException;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
@@ -65,5 +66,13 @@ public class AndroidActions {
 	public void waitForElementToBeVisible(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOf(element));
+	}
+	public void waitForElementToBeVisible(By by) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(by));
+	}
+	
+	public double getFormattedAmount(String amountStr) {
+		return Double.parseDouble(amountStr);
 	}
 }
