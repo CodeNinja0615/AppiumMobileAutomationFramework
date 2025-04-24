@@ -25,11 +25,13 @@ import io.appium.java_client.ios.IOSDriver;
 import io.appium.java_client.ios.options.XCUITestOptions;
 import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
+import sameerakhtar.pageObjects.ios.HomePage;
 
-public class iOSBaseTest {
+public class IOSBaseTest {
 
 	public AppiumDriverLocalService service;
 	public IOSDriver driver;
+	public HomePage homePage;
 	String packageName = "com.example.apple-samplecode.UICatalog"; //xcrun simctl listapps booted //---For Simulator
 	String appPath = System.getProperty("user.dir") + "/src/main/java/sameerakhtar/resources/UIKitCatalog.app";
 	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
@@ -60,6 +62,7 @@ public class iOSBaseTest {
 			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
 			driver.activateApp(packageName);
+			homePage = new HomePage(driver);
 		}
 	}
 

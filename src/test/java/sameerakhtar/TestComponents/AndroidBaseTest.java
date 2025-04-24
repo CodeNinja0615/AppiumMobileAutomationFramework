@@ -30,7 +30,7 @@ import io.appium.java_client.service.local.AppiumDriverLocalService;
 import io.appium.java_client.service.local.AppiumServiceBuilder;
 import sameerakhtar.pageObjects.android.FormPage;
 
-public class BaseTest {
+public class AndroidBaseTest {
 
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;

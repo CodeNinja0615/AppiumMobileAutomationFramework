@@ -7,10 +7,21 @@ import org.openqa.selenium.WebElement;
 import org.testng.annotations.Test;
 
 import io.appium.java_client.AppiumBy;
-import sameerakhtar.TestComponents.iOSBaseTest;
+import sameerakhtar.TestComponents.IOSBaseTest;
+import sameerakhtar.pageObjects.ios.AlertViewsPage;
 
-public class iOSBasics extends iOSBaseTest {
+public class IOSBasics extends IOSBaseTest {
 
+	/**
+	 * 
+	 * 
+	 */
+	@Test
+	public void iOSTestPOM() {
+		AlertViewsPage alertViewsPage = homePage.goToAlertViewsPage();
+		alertViewsPage.handleAlertViews("Sameer Akhtar");
+	}
+	
 	@Test
 	public void iOSBasicTest() {
 		driver.findElement(AppiumBy.accessibilityId("Alert Views")).click();

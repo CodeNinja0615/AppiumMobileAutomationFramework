@@ -17,12 +17,12 @@ import org.testng.annotations.Test;
 import io.appium.java_client.AppiumBy;
 import io.appium.java_client.android.nativekey.AndroidKey;
 import io.appium.java_client.android.nativekey.KeyEvent;
-import sameerakhtar.TestComponents.BaseTest;
+import sameerakhtar.TestComponents.AndroidBaseTest;
 import sameerakhtar.pageObjects.android.CartPage;
 import sameerakhtar.pageObjects.android.ProductCatalogue;
 import sameerakhtar.pageObjects.android.WebviewPage;
 
-public class ECommerceTest extends BaseTest {
+public class ECommerceTest extends AndroidBaseTest {
 
 	/**
 	 * @throws InterruptedException
