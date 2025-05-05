@@ -38,7 +38,6 @@ public class AndroidBaseTest {
 
 	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
 			throws MalformedURLException, URISyntaxException {
-
 		if (platformName.equalsIgnoreCase("Android")) {
 			// ---node execution for Windows Machine here
 //			String currentUser = System.getProperty("user.name");
@@ -57,7 +56,7 @@ public class AndroidBaseTest {
 																														// Node.js
 																														// path
 					.withAppiumJS(new File("/opt/homebrew/lib/node_modules/appium/build/lib/main.js")) // Appium path
-					.withEnvironment(env) // ✅ Pass environment variables explicitly
+					.withEnvironment(env) // Pass environment variables explicitly
 					.withIPAddress("127.0.0.1").usingPort(4723)
 					.withArgument(() -> "--allow-insecure", "chromedriver_autodownload") //--Adding to handle web context
 					.build();
