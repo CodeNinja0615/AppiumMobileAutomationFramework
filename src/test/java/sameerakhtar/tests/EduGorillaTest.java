@@ -15,8 +15,8 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.testng.Assert;
-import org.testng.annotations.AfterTest;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import com.google.common.collect.ImmutableMap;
@@ -31,7 +31,7 @@ public class EduGorillaTest {
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;
 
-	@BeforeTest
+	@BeforeMethod
 	public void setup() throws MalformedURLException, URISyntaxException {
 		Map<String, String> env = new HashMap<>(System.getenv());
 		env.put("ANDROID_HOME", "/Users/sameerakhtar/Library/Android/sdk");
@@ -63,12 +63,11 @@ public class EduGorillaTest {
 
 	@Test
 	public void loginTest() throws InterruptedException, IOException {
-		scrollToEndAction();
-		scrollToEndAction();
-		scrollToEndAction();
-		scrollToEndAction();
-		WebElement loginBtn = driver.findElement(AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']"));
-//		scrollToEndAction(loginBtn);
+		for (int i = 0; i < 4; i++) {
+			swipeAction("left");
+		}
+		WebElement loginBtn = driver.findElement(
+				AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']"));
 		loginBtn.click();
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtUsername")).sendKeys("admin");
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtPassword")).sendKeys("password123");
@@ -81,13 +80,11 @@ public class EduGorillaTest {
 
 	@Test
 	public void invalidLoginTest() throws InterruptedException, IOException {
-		Thread.sleep(5000);
-		scrollToEndAction();
-		scrollToEndAction();
-		scrollToEndAction();
-		scrollToEndAction();
-		WebElement loginBtn = driver.findElement(AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']"));
-//		scrollToEndAction(loginBtn);
+		for (int i = 0; i < 4; i++) {
+			swipeAction("left");
+		}
+		WebElement loginBtn = driver.findElement(
+				AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']"));
 		loginBtn.click();
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtUsername")).sendKeys("wronguser");
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtPassword")).sendKeys("wrongpass");
@@ -98,27 +95,13 @@ public class EduGorillaTest {
 		FileUtils.copyFile(src, new File(" failed_login.png.png"));
 	}
 
-	public void scrollToEndAction(WebElement element) {
-		boolean canScrollMore;
-		do {
-			canScrollMore = (Boolean) ((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap
-					.of("left", 100, "top", 100, "width", 200, "height", 200, "direction", "left", "percent", 3.0));
-		} while (canScrollMore);
-	}
-	public void scrollToEndAction() throws InterruptedException {
-//		((JavascriptExecutor) driver).executeScript("mobile: scrollGesture", ImmutableMap.of("left", 300, "top", 200,
-//				"width", 300, "height", 300, "direction", "right", "percent", 20.0));
-		// Java
+	public void swipeAction(String direction) throws InterruptedException {
 		Thread.sleep(1000);
-		((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of(
-		    "left", 100, "top", 100, "width", 200, "height", 200,
-		    "direction", "left",
-		    "percent", 0.75
-		));
-
+		((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("left", 100, "top", 100,
+				"width", 200, "height", 200, "direction", direction, "percent", 0.75));
 	}
 
-	@AfterTest
+	@AfterMethod
 	public void teardown() {
 		driver.terminateApp("com.edugorilla.interviewapp");
 		driver.close();

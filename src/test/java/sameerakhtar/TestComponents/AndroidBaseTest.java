@@ -4,7 +4,6 @@ package sameerakhtar.TestComponents;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -19,7 +18,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import com.google.common.collect.ImmutableMap;
@@ -36,8 +37,16 @@ public class AndroidBaseTest {
 	public FormPage formPage;
 	String packageName = "com.androidsample.generalstore";
 
-	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
-			throws MalformedURLException, URISyntaxException {
+	@BeforeClass
+	public void configureAppiumMobile() throws URISyntaxException, IOException {
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "//src//main//java//sameerakhtar//resources//GlobalData.properties");
+		prop.load(fis);
+		String deviceName = System.getProperty("deviceName") != null ? System.getProperty("deviceName")
+				: prop.getProperty("deviceName");
+		String platformName = System.getProperty("platformName") != null ? System.getProperty("platformName")
+				: prop.getProperty("platformName");
 		if (platformName.equalsIgnoreCase("Android")) {
 			// ---node execution for Windows Machine here
 //			String currentUser = System.getProperty("user.name");
@@ -58,7 +67,8 @@ public class AndroidBaseTest {
 					.withAppiumJS(new File("/opt/homebrew/lib/node_modules/appium/build/lib/main.js")) // Appium path
 					.withEnvironment(env) // Pass environment variables explicitly
 					.withIPAddress("127.0.0.1").usingPort(4723)
-					.withArgument(() -> "--allow-insecure", "chromedriver_autodownload") //--Adding to handle web context
+					.withArgument(() -> "--allow-insecure", "chromedriver_autodownload") // --Adding to handle web
+																							// context
 					.build();
 
 			service.start();
@@ -66,23 +76,20 @@ public class AndroidBaseTest {
 			options.setDeviceName(deviceName);
 			options.setPlatformName(platformName);
 			// -----------------------------------------------------------------------------------------------------------------------//
-//			options.setApp("C:/Users/HP/Downloads/General-Store.apk");
+//			options.setApp("C:/Users/HP/Downloads/General-Store.apk");  //---Optional for demo
+//			options.setApp("/Users/sameerakhtar/Downloads/General-Store.apk");  //---Optional for demo
 //			adb shell dumpsys window | findstr "mCurrentFocus" --WIN
 //			adb shell dumpsys window | grep "mCurrentFocus"  --MAC
 //			options.setAppActivity("com.instagram.barcelona.mainactivity.BarcelonaActivity");
 //			options.setAppPackage("com.instagram.barcelona");
 			// -----------------------------------------------------------------------------------------------------------------------//
-			options.setNoReset(setNoReset); // ----- set true else app will be reset on start
+			options.setNoReset(true); // ----- set true else app will be reset on start
 			options.setAppWaitForLaunch(true);
 			options.setGpsEnabled(true);
 			options.autoGrantPermissions();
-//			options.setChromedriverExecutable(""); //---Can set driver path but I have added arguments while creating service above ^
 			driver = new AndroidDriver(new URI("http://127.0.0.1:4723").toURL(), options);
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
-			driver.activateApp(packageName);
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
-			formPage = new FormPage(driver);
+//			options.setChromedriverExecutable(""); //---Can set driver path but I have added arguments while creating service above ^
 		} else if (platformName.equalsIgnoreCase("iOS")) {
 			// ---iOS code here
 		}
@@ -99,21 +106,18 @@ public class AndroidBaseTest {
 
 	@BeforeMethod
 	public void setup() throws URISyntaxException, IOException {
-		Properties prop = new Properties();
-		FileInputStream fis = new FileInputStream(
-				System.getProperty("user.dir") + "//src//main//java//sameerakhtar//resources//GlobalData.properties");
-		prop.load(fis);
-		String deviceName = System.getProperty("deviceName") != null ? System.getProperty("deviceName")
-				: prop.getProperty("deviceName");
-		String platformName = System.getProperty("platformName") != null ? System.getProperty("platformName")
-				: prop.getProperty("platformName");
-
-		configureAppiumMobile(deviceName, platformName, true);
+		driver.activateApp(packageName);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		formPage = new FormPage(driver);
 	}
 
 	@AfterMethod
 	public void tearDown() {
 		driver.terminateApp(packageName);
+	}
+
+	@AfterClass
+	public void stopAppium() {
 		driver.quit();
 		service.stop();
 	}
