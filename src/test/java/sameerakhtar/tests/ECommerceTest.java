@@ -11,7 +11,7 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.Test;
 
 import io.appium.java_client.AppiumBy;
@@ -39,10 +39,10 @@ public class ECommerceTest extends AndroidBaseTest {
 		productCatalogue.searchAndAddProductToCart(expectedProductList);
 		CartPage cartPage = productCatalogue.navigateToCartPage();
 		boolean status = cartPage.verifyProductInCart(expectedProductList);
-		Assert.assertTrue(status);
+		AssertJUnit.assertTrue(status);
 		double calculatedSum = cartPage.calculateTotalAmountFromProducts();
 		double totalAmount = cartPage.getTotalAmount();
-		Assert.assertEquals(calculatedSum, totalAmount);
+		AssertJUnit.assertEquals(calculatedSum, totalAmount);
 		WebviewPage webviewPage = cartPage.completePurchase();
 		Thread.sleep(6000);
 		webviewPage.switchContextAndPerformSearchAction();
@@ -86,7 +86,7 @@ public class ECommerceTest extends AndroidBaseTest {
 				"//android.support.v7.widget.RecyclerView[@resource-id='com.androidsample.generalstore:id/rvCartProductList']/android.widget.RelativeLayout/android.widget.LinearLayout"));
 		for (WebElement cartProduct : cartProducts) {
 			String productName = cartProduct.findElement(AppiumBy.xpath("//android.widget.TextView")).getText();
-			Assert.assertTrue(expectedProductList.contains(productName));
+			AssertJUnit.assertTrue(expectedProductList.contains(productName));
 			String amountStr = cartProduct
 					.findElement(AppiumBy.xpath("//android.widget.LinearLayout[2]/android.widget.TextView")).getText()
 					.replace("$", "");
@@ -97,7 +97,7 @@ public class ECommerceTest extends AndroidBaseTest {
 				.getText().replace("$", "");
 
 		double totalAmount = getFormattedAmount(totalAmountStr);
-		Assert.assertEquals(sum, totalAmount);
+		AssertJUnit.assertEquals(sum, totalAmount);
 		driver.findElement(AppiumBy.xpath("//android.widget.CheckBox")).click();
 		WebElement tnC = driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/termsButton"));
 		longPressAction(tnC);
@@ -129,6 +129,6 @@ public class ECommerceTest extends AndroidBaseTest {
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/radioMale")).click();
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/btnLetsShop")).click();
 		String toastMsg = driver.findElement(AppiumBy.xpath("(//android.widget.Toast)[1]")).getDomAttribute("name");
-		Assert.assertEquals(toastMsg, "Please enter your name");
+		AssertJUnit.assertEquals(toastMsg, "Please enter your name");
 	}
 }

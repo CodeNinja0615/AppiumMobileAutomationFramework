@@ -4,7 +4,6 @@ package sameerakhtar.TestComponents;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.time.Duration;
@@ -16,7 +15,9 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
 
 import com.google.common.collect.ImmutableMap;
@@ -32,11 +33,20 @@ public class IOSBaseTest {
 	public AppiumDriverLocalService service;
 	public IOSDriver driver;
 	public HomePage homePage;
-	String packageName = "com.example.apple-samplecode.UICatalog"; //xcrun simctl listapps booted //---For Simulator
+	String packageName = "com.example.apple-samplecode.UICatalog"; // xcrun simctl listapps booted //---For Simulator
 	String appPath = System.getProperty("user.dir") + "/src/main/java/sameerakhtar/resources/UIKitCatalog.app";
-	public void configureAppiumMobile(String deviceName, String platformName, boolean setNoReset)
-			throws MalformedURLException, URISyntaxException {
 
+	@BeforeClass
+	public void configureAppiumMobile() throws URISyntaxException, IOException {
+
+		Properties prop = new Properties();
+		FileInputStream fis = new FileInputStream(
+				System.getProperty("user.dir") + "//src//main//java//sameerakhtar//resources//GlobalData.properties");
+		prop.load(fis);
+		String deviceName = System.getProperty("deviceName") != null ? System.getProperty("deviceName")
+				: prop.getProperty("deviceName");
+		String platformName = System.getProperty("platformName") != null ? System.getProperty("platformName")
+				: prop.getProperty("platformName");
 		if (platformName.equalsIgnoreCase("Android")) {
 		} else if (platformName.equalsIgnoreCase("iOS")) {
 			service = new AppiumServiceBuilder().usingDriverExecutable(new File("/opt/homebrew/opt/node@22/bin/node")) // Explicit
@@ -55,29 +65,20 @@ public class IOSBaseTest {
 			options.setPlatformName(platformName);
 //			options.setPlatformVersion("18.4");
 //			options.setApp(appPath); //---To open app with .app file
-			options.setNoReset(setNoReset); // ----- set true else app will be reset on start
+			options.setNoReset(true); // ----- set true else app will be reset on start
 			options.setWdaLaunchTimeout(Duration.ofSeconds(10));
-			// options.setChromedriverExecutable(""); //---Can set driver path but I have added arguments while creating service above ^
+			// options.setChromedriverExecutable(""); //---Can set driver path but I have
+			// added arguments while creating service above ^
 			driver = new IOSDriver(new URI("http://127.0.0.1:4723").toURL(), options);
-			driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 			driver.unlockDevice();
-			driver.activateApp(packageName);
-			homePage = new HomePage(driver);
 		}
 	}
 
 	@BeforeMethod
 	public void setup() throws URISyntaxException, IOException {
-		Properties prop = new Properties();
-		FileInputStream fis = new FileInputStream(
-				System.getProperty("user.dir") + "//src//main//java//sameerakhtar//resources//GlobalData.properties");
-		prop.load(fis);
-		String deviceName = System.getProperty("deviceName") != null ? System.getProperty("deviceName")
-				: prop.getProperty("deviceName");
-		String platformName = System.getProperty("platformName") != null ? System.getProperty("platformName")
-				: prop.getProperty("platformName");
-
-		configureAppiumMobile(deviceName, platformName, true);
+		driver.activateApp(packageName);
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
+		homePage = new HomePage(driver);
 	}
 
 	public void longPressAction(WebElement element) {
@@ -86,25 +87,26 @@ public class IOSBaseTest {
 	}
 
 	public void scrollToElement(WebElement element) {
-		driver.executeScript("mobile: scroll", ImmutableMap.of(
-			    "direction", "down",
-			    "elementId", ((RemoteWebElement) element).getId()
-			));
+		driver.executeScript("mobile: scroll",
+				ImmutableMap.of("direction", "down", "elementId", ((RemoteWebElement) element).getId()));
 	}
-	
+
 	public void swipeAction() {
-		driver.executeScript("mobile: swipe", ImmutableMap.of(
-			    "velocity", 2500, "direction", "left"));
+		driver.executeScript("mobile: swipe", ImmutableMap.of("velocity", 2500, "direction", "left"));
 	}
-	
+
 	@AfterMethod
 	public void tearDown() {
 		driver.terminateApp(packageName);
+	}
+
+	@AfterClass
+	public void stopAppium() {
 		driver.quit();
 		service.stop();
 	}
-
-	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report in Listeners
+	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report
+																							// in Listeners
 		TakesScreenshot ts = (TakesScreenshot) driver;
 		File src = ts.getScreenshotAs(OutputType.FILE);
 		File filePath = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");

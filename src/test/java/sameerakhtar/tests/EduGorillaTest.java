@@ -14,7 +14,10 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+import org.testng.AssertJUnit;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -66,8 +69,9 @@ public class EduGorillaTest {
 		for (int i = 0; i < 4; i++) {
 			swipeAction("left");
 		}
-		WebElement loginBtn = driver.findElement(
-				AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement loginBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		    AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']")));
 		loginBtn.click();
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtUsername")).sendKeys("admin");
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtPassword")).sendKeys("password123");
@@ -83,14 +87,15 @@ public class EduGorillaTest {
 		for (int i = 0; i < 4; i++) {
 			swipeAction("left");
 		}
-		WebElement loginBtn = driver.findElement(
-				AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']"));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement loginBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
+		    AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']")));
 		loginBtn.click();
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtUsername")).sendKeys("wronguser");
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/edtPassword")).sendKeys("wrongpass");
 		driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/btnLogin")).click();
 		String toastMsg = driver.findElement(AppiumBy.xpath("//android.widget.Toast[1]")).getDomAttribute("name");
-		Assert.assertEquals("Invalid Credentials", toastMsg);
+		AssertJUnit.assertEquals("Invalid Credentials", toastMsg);
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
 		FileUtils.copyFile(src, new File(" failed_login.png.png"));
 	}
@@ -104,6 +109,7 @@ public class EduGorillaTest {
 	@AfterMethod
 	public void teardown() {
 		driver.terminateApp("com.edugorilla.interviewapp");
-		driver.close();
+		driver.quit();
+		service.stop();
 	}
 }
