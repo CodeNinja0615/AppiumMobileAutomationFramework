@@ -1,6 +1,7 @@
 package sameerakhtar.tests;
 
 import java.time.Duration;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.AssertJUnit;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import io.appium.java_client.AppiumBy;
@@ -28,13 +30,13 @@ public class ECommerceTest extends AndroidBaseTest {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test
-	public void endToEndTestPOM() throws InterruptedException {
-		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
-		List<String> expectedProductList = Arrays.asList(expectedProduct);
-		formPage.setCountry("Algeria");
-		formPage.setNameField("Sameer Akhtar");
-		formPage.setGender("Male");
+	@Test(dataProvider="getData")
+	public void endToEndTestPOM(String name, String country, String gender, List<String> expectedProductList) throws InterruptedException {
+//		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
+//		List<String> expectedProductList = Arrays.asList(expectedProduct);
+		formPage.setCountry(country);
+		formPage.setNameField(name);
+		formPage.setGender(gender);
 		ProductCatalogue productCatalogue = formPage.submitForm();
 		productCatalogue.searchAndAddProductToCart(expectedProductList);
 		CartPage cartPage = productCatalogue.navigateToCartPage();
@@ -130,5 +132,13 @@ public class ECommerceTest extends AndroidBaseTest {
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/btnLetsShop")).click();
 		String toastMsg = driver.findElement(AppiumBy.xpath("(//android.widget.Toast)[1]")).getDomAttribute("name");
 		AssertJUnit.assertEquals(toastMsg, "Please enter your name");
+	}
+	
+	@DataProvider
+	public Object[][] getData() {
+		List<String> products = new ArrayList<String>();
+		products.add("Air Jordan 4 Retro");
+		products.add("Jordan Lift Off");
+		return new Object[][] {{"Sameer Akhtar", "Algeria", "Male", products}, {"Sameer Akhtar", "India", "Male", products}};
 	}
 }
