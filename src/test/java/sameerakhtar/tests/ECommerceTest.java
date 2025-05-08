@@ -1,8 +1,10 @@
 package sameerakhtar.tests;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
@@ -23,6 +25,7 @@ import sameerakhtar.TestComponents.AndroidBaseTest;
 import sameerakhtar.pageObjects.android.CartPage;
 import sameerakhtar.pageObjects.android.ProductCatalogue;
 import sameerakhtar.pageObjects.android.WebviewPage;
+import sameerakhtar.testData.DataReader;
 
 public class ECommerceTest extends AndroidBaseTest {
 
@@ -31,12 +34,16 @@ public class ECommerceTest extends AndroidBaseTest {
 	 * 
 	 */
 	@Test(dataProvider="getData")
-	public void endToEndTestPOM(String name, String country, String gender, List<String> expectedProductList) throws InterruptedException {
+//	public void endToEndPOMTest(String name, String country, String gender, List<String> expectedProductList) throws InterruptedException {
+	public void endToEndPOMTest(HashMap<String, String> input) throws InterruptedException {
 //		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
 //		List<String> expectedProductList = Arrays.asList(expectedProduct);
-		formPage.setCountry(country);
-		formPage.setNameField(name);
-		formPage.setGender(gender);
+		List<String> expectedProductList = new ArrayList<String>();
+		expectedProductList.add(input.get("product1"));
+		expectedProductList.add(input.get("product2"));
+		formPage.setCountry(input.get("country"));
+		formPage.setNameField(input.get("name"));
+		formPage.setGender(input.get("gender"));
 		ProductCatalogue productCatalogue = formPage.submitForm();
 		productCatalogue.searchAndAddProductToCart(expectedProductList);
 		CartPage cartPage = productCatalogue.navigateToCartPage();
@@ -135,10 +142,18 @@ public class ECommerceTest extends AndroidBaseTest {
 	}
 	
 	@DataProvider
-	public Object[][] getData() {
-		List<String> products = new ArrayList<String>();
-		products.add("Air Jordan 4 Retro");
-		products.add("Jordan Lift Off");
-		return new Object[][] {{"Sameer Akhtar", "Algeria", "Male", products}, {"Sameer Akhtar", "India", "Male", products}};
+	public Object[][] getData() throws IOException {
+//		"products": ["Air Jordan 4 Retro", "Jordan Lift Off"] //---Test tomorrow
+		List<HashMap<String, Object>> data = DataReader.getJsonDataToMap(
+				System.getProperty("user.dir") + "//src//test//java//sameerakhtar//testData//eCommerce.json");
+		return new Object[][] { { data.get(0) }, { data.get(1) } };// data.get(0) -- first set of parameters // data.get(1) -- second set of parameters
 	}
+	
+//	@DataProvider
+//	public Object[][] getData() {
+//		List<String> products = new ArrayList<String>();
+//		products.add("Air Jordan 4 Retro");
+//		products.add("Jordan Lift Off");
+//		return new Object[][] {{"Sameer Akhtar", "Algeria", "Male", products}, {"Sameer Akhtar", "India", "Male", products}};
+//	}
 }

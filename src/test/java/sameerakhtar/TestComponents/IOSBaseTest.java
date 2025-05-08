@@ -76,6 +76,7 @@ public class IOSBaseTest {
 
 	@BeforeMethod
 	public void setup() throws URISyntaxException, IOException {
+		//---Bundle ID For simulator--- xcrun simctl listapps booted. 
 		driver.activateApp(packageName);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		homePage = new HomePage(driver);
