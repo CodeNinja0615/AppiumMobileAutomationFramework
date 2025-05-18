@@ -1,13 +1,14 @@
 package sameerakhtar.tests;
 
 import org.testng.annotations.Test;
+
+import sameerakhtar.testUtils.BrowserBaseTest;
+
 import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.testng.annotations.Test;
-
-import sameerakhtar.TestComponents.BrowserBaseTest;
 
 public class MobileBrowserTest extends BrowserBaseTest {
 
