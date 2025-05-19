@@ -66,10 +66,11 @@ public class EduGorillaTest {
 
 	@Test
 	public void loginTest() throws InterruptedException, IOException {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(AppiumBy.id("com.edugorilla.interviewapp:id/tvSlide")));
 		for (int i = 0; i < 4; i++) {
 			swipeAction("left");
 		}
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement loginBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
 		    AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']")));
 		loginBtn.click();
@@ -79,15 +80,16 @@ public class EduGorillaTest {
 		Boolean tickDisplayed = driver.findElement(AppiumBy.id("com.edugorilla.interviewapp:id/ivTick")).isDisplayed();
 		Assert.assertTrue(tickDisplayed);
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File(" success_login.png.png"));
+		FileUtils.copyFile(src, new File("success_login.png.png"));
 	}
 
 	@Test
 	public void invalidLoginTest() throws InterruptedException, IOException {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(AppiumBy.id("com.edugorilla.interviewapp:id/tvSlide")));
 		for (int i = 0; i < 4; i++) {
 			swipeAction("left");
 		}
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement loginBtn = wait.until(ExpectedConditions.visibilityOfElementLocated(
 		    AppiumBy.xpath("//android.widget.Button[@resource-id='com.edugorilla.interviewapp:id/btnGotoLogin']")));
 		loginBtn.click();
@@ -97,12 +99,12 @@ public class EduGorillaTest {
 		String toastMsg = driver.findElement(AppiumBy.xpath("//android.widget.Toast[1]")).getDomAttribute("name");
 		AssertJUnit.assertEquals("Invalid Credentials", toastMsg);
 		File src = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-		FileUtils.copyFile(src, new File(" failed_login.png.png"));
+		FileUtils.copyFile(src, new File("failed_login.png.png"));
 	}
 
 	public void swipeAction(String direction) throws InterruptedException {
 		Thread.sleep(1000);
-		((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("left", 100, "top", 100,
+		((JavascriptExecutor) driver).executeScript("mobile: swipeGesture", ImmutableMap.of("left", 300, "top", 300,
 				"width", 200, "height", 200, "direction", direction, "percent", 0.75));
 	}
 
