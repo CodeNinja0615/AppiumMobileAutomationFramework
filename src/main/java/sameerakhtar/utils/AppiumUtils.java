@@ -1,11 +1,14 @@
 package sameerakhtar.utils;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -59,5 +62,12 @@ public class AppiumUtils {
 
 	public double getFormattedAmount(String amountStr) {
 		return Double.parseDouble(amountStr);
+	}
+
+	public static String getScreenshot(String testCaseName, AppiumDriver driver) throws IOException {
+		File source = driver.getScreenshotAs(OutputType.FILE);
+		String destFile = System.getProperty("user.dir") + "/reports/" + testCaseName + ".png";
+		FileUtils.copyFile(source, new File(destFile));
+		return destFile;
 	}
 }

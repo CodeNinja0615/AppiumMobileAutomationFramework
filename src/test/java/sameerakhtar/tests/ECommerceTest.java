@@ -33,7 +33,7 @@ public class ECommerceTest extends AndroidBaseTest {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(dataProvider="getData")
+	@Test(dataProvider = "getData")
 //	public void endToEndPOMTest(String name, String country, String gender, List<String> expectedProductList) throws InterruptedException {
 	public void endToEndPOMTest(HashMap<String, String> input) throws InterruptedException {
 //		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
@@ -140,15 +140,16 @@ public class ECommerceTest extends AndroidBaseTest {
 		String toastMsg = driver.findElement(AppiumBy.xpath("(//android.widget.Toast)[1]")).getDomAttribute("name");
 		AssertJUnit.assertEquals(toastMsg, "Please enter your name");
 	}
-	
+
 	@DataProvider
 	public Object[][] getData() throws IOException {
 //		"products": ["Air Jordan 4 Retro", "Jordan Lift Off"] //---Test tomorrow
 		List<HashMap<String, Object>> data = DataReader.getJsonDataToMap(
 				System.getProperty("user.dir") + "//src//test//java//sameerakhtar//testData//eCommerce.json");
-		return new Object[][] { { data.get(0) }, { data.get(1) } };// data.get(0) -- first set of parameters // data.get(1) -- second set of parameters
+		return new Object[][] { { data.get(0) }, { data.get(1) } };// data.get(0) -- first set of parameters
+																  // data.get(1) -- second set of parameters
 	}
-	
+
 //	@DataProvider
 //	public Object[][] getData() {
 //		List<String> products = new ArrayList<String>();
