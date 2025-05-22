@@ -1,18 +1,12 @@
 package sameerakhtar.testUtils;
 
-//----https://github.com/appium/appium-uiautomator2-driver/?tab=readme-ov-file
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.time.Duration;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.testng.annotations.AfterClass;
@@ -34,7 +28,7 @@ public class AndroidBaseTest {
 	public FormPage formPage;
 	String packageName = "com.androidsample.generalstore";
 
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	public void configureAppiumMobile() throws URISyntaxException, IOException {
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream(
@@ -83,30 +77,21 @@ public class AndroidBaseTest {
 		return Double.parseDouble(amountStr);
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup() throws URISyntaxException, IOException {
 		driver.activateApp(packageName);
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 		formPage = new FormPage(driver);
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		driver.terminateApp(packageName);
 	}
 
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void stopAppium() {
 		driver.quit();
 		service.stop();
-	}
-
-	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report
-		// in Listeners
-		TakesScreenshot ts = (TakesScreenshot) driver;
-		File src = ts.getScreenshotAs(OutputType.FILE);
-		File filePath = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-		FileUtils.copyFile(src, filePath);
-		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
 	}
 }

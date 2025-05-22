@@ -33,7 +33,7 @@ public class ECommerceTest extends AndroidBaseTest {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test(dataProvider = "getData")
+	@Test(dataProvider = "getData", groups = { "Regression" })
 //	public void endToEndPOMTest(String name, String country, String gender, List<String> expectedProductList) throws InterruptedException {
 	public void endToEndPOMTest(HashMap<String, String> input) throws InterruptedException {
 //		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
@@ -61,7 +61,7 @@ public class ECommerceTest extends AndroidBaseTest {
 	 * @throws InterruptedException
 	 * 
 	 */
-	@Test
+	@Test(groups = { "Regression" })
 	public void endToEndTest() throws InterruptedException {
 		String[] expectedProduct = { "Air Jordan 4 Retro", "Jordan Lift Off" };
 		List<String> expectedProductList = Arrays.asList(expectedProduct);
@@ -129,7 +129,7 @@ public class ECommerceTest extends AndroidBaseTest {
 		driver.context(nativeContext);
 	}
 
-	@Test
+	@Test(groups = { "Regression" })
 	public void errorValidationTest() {
 		driver.findElement(AppiumBy.id("com.androidsample.generalstore:id/spinnerCountry")).click();
 		driver.findElement(
@@ -147,7 +147,7 @@ public class ECommerceTest extends AndroidBaseTest {
 		List<HashMap<String, Object>> data = DataReader.getJsonDataToMap(
 				System.getProperty("user.dir") + "//src//test//java//sameerakhtar//testData//eCommerce.json");
 		return new Object[][] { { data.get(0) }, { data.get(1) } };// data.get(0) -- first set of parameters
-																  // data.get(1) -- second set of parameters
+																	// data.get(1) -- second set of parameters
 	}
 
 //	@DataProvider

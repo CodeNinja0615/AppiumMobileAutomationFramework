@@ -36,7 +36,7 @@ public class IOSBaseTest {
 	String packageName = "com.example.apple-samplecode.UICatalog"; // xcrun simctl listapps booted //---For Simulator
 	String appPath = System.getProperty("user.dir") + "/src/main/java/sameerakhtar/resources/UIKitCatalog.app";
 
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	public void configureAppiumMobile() throws URISyntaxException, IOException {
 
 		Properties prop = new Properties();
@@ -78,7 +78,7 @@ public class IOSBaseTest {
 		}
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup() throws URISyntaxException, IOException {
 		// ---Bundle ID For simulator--- xcrun simctl listapps booted.
 		driver.activateApp(packageName);
@@ -100,23 +100,14 @@ public class IOSBaseTest {
 		driver.executeScript("mobile: swipe", ImmutableMap.of("velocity", 2500, "direction", "left"));
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 		driver.terminateApp(packageName);
 	}
 
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void stopAppium() {
 		driver.quit();
 		service.stop();
-	}
-
-	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report
-																							// in Listeners
-		TakesScreenshot ts = (TakesScreenshot) driver;
-		File src = ts.getScreenshotAs(OutputType.FILE);
-		File filePath = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-		FileUtils.copyFile(src, filePath);
-		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
 	}
 }

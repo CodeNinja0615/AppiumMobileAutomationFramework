@@ -34,7 +34,7 @@ public class EduGorillaTest {
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup() throws MalformedURLException, URISyntaxException {
 		Map<String, String> env = new HashMap<>(System.getenv());
 		env.put("ANDROID_HOME", "/Users/sameerakhtar/Library/Android/sdk");
@@ -64,7 +64,7 @@ public class EduGorillaTest {
 		driver.activateApp("com.edugorilla.interviewapp");
 	}
 
-	@Test
+	@Test(groups = { "Smoke" })
 	public void loginTest() throws InterruptedException, IOException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(AppiumBy.id("com.edugorilla.interviewapp:id/tvSlide")));
@@ -83,7 +83,7 @@ public class EduGorillaTest {
 		FileUtils.copyFile(src, new File("success_login.png.png"));
 	}
 
-	@Test
+	@Test(groups = { "Smoke" })
 	public void invalidLoginTest() throws InterruptedException, IOException {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(AppiumBy.id("com.edugorilla.interviewapp:id/tvSlide")));
@@ -108,7 +108,7 @@ public class EduGorillaTest {
 				"width", 200, "height", 200, "direction", direction, "percent", 0.75));
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void teardown() {
 		driver.terminateApp("com.edugorilla.interviewapp");
 		driver.quit();

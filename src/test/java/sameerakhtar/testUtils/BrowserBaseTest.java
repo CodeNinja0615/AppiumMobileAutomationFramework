@@ -11,10 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Properties;
 
-import org.apache.commons.io.FileUtils;
-import org.openqa.selenium.OutputType;
-import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeClass;
@@ -30,7 +26,7 @@ public class BrowserBaseTest {
 	public AppiumDriverLocalService service;
 	public AndroidDriver driver;
 
-	@BeforeClass
+	@BeforeClass(alwaysRun = true)
 	public void configureAppiumMobile() throws URISyntaxException, IOException {
 		Properties prop = new Properties();
 		FileInputStream fis = new FileInputStream(
@@ -82,27 +78,18 @@ public class BrowserBaseTest {
 		}
 	}
 
-	@BeforeMethod
+	@BeforeMethod(alwaysRun = true)
 	public void setup() throws URISyntaxException, IOException {
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5));
 	}
 
-	@AfterMethod
+	@AfterMethod(alwaysRun = true)
 	public void tearDown() {
 	}
 
-	@AfterClass
+	@AfterClass(alwaysRun = true)
 	public void stopAppium() {
 		driver.quit();
 		service.stop();
-	}
-	
-	public String getScreenshot(String testCaseName, WebDriver driver) throws IOException {// ----Goes to extent report
-		// in Listeners
-		TakesScreenshot ts = (TakesScreenshot) driver;
-		File src = ts.getScreenshotAs(OutputType.FILE);
-		File filePath = new File(System.getProperty("user.dir") + "//reports//" + testCaseName + ".png");
-		FileUtils.copyFile(src, filePath);
-		return System.getProperty("user.dir") + "//reports//" + testCaseName + ".png";
 	}
 }
